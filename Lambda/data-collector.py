@@ -36,6 +36,9 @@ def get_cpu_info():
 def get_cpu_temp():
     return subprocess.check_output(['vcgencmd', 'measure_temp']).split('=')[1]
 
+def get_lambdas():
+    return subprocess.check_output(['ls', '/greengrass/ggc/deployment/lambda'])
+
 def run():
     date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
@@ -48,10 +51,13 @@ def run():
     free_mem = memory_info['MemFree']
     avail_mem = memory_info['MemAvailable']
 
+    lambdas = get_lambdas()
+
     print memory_info
     #print cpu_info
     print cpu_temp
     print disk_info
+    print lambdas
 
     if not my_platform:
         client.publish(
@@ -72,7 +78,8 @@ def run():
                 'free_memory (kB)' : free_mem,
                 'avail_memory (kB)': avail_mem,
                 'cpu_temp': cpu_temp,
-                'disk_info': disk_info
+                'disk_info': disk_info,
+                'lambdas_deployed': lambdas
             })
         )
 #run()
