@@ -31,7 +31,7 @@ def get_disk_info():
             info = line.split()[0:6]
 
     # publish information to the cloud
-    for i in range(1, 4):
+    for i in range(1,4):
         client.publish(
             topic='RM/Greengrass/data/Disk_{}'.format(desc[i]),
             payload=json.dumps({'Disk_{}'.format(desc[i]): info[i]})
@@ -79,14 +79,14 @@ def get_lambdas():
 def run():
     date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    ip = get_ip()
-    memory_info = get_memory_info()
-    cpu_temp = get_cpu_temp()
-    disk_info = get_disk_info()
-    lambdas = get_lambdas()
+    #ip = get_ip()
+    #memory_info = get_memory_info()
+    #cpu_temp = get_cpu_temp()
+    #disk_info = get_disk_info()
+    #lambdas = get_lambdas()
 
-    output.write(ip)
-    output.write(memory_info)
+    #print ip
+    #print memory_info
     #print cpu_temp
     #print disk_info
     #print lambdas
@@ -95,15 +95,16 @@ def run():
         client.publish(
             topic='RM/Greengrass/data',
             payload=json.dumps({
-                'deviceId': 'Greengrass', #ip,
+                'deviceId': 'Greengrass-Infinite', #ip,
                 'timestamp': date_time
             })
         )
+
     else: #greengrass platform
         client.publish(
             topic='RM/Greengrass/data',
             payload=json.dumps({
-                'deviceId': 'Greengrass', #ip,
+                'deviceId': 'Greengrass-Infinite', #ip,
                 'timestamp': date_time,
                 'platform': my_platform
                 #'cpu_temp': cpu_temp,
@@ -118,8 +119,5 @@ def lambda_handler(event, context):
     run()
 
 
-
 #cd /greengrass/ggc/core/
 #sudo ./greengrassd start
-
-#ps aux | grep -E 'greengrass.*daemon'
