@@ -22,6 +22,7 @@ def get_ip():
 def get_disk_info():
     df = os.popen("df -h /")
     i = 0
+    desc, info = [], []
     while i<3:
         i = i + 1
         line = df.readline()
@@ -31,12 +32,12 @@ def get_disk_info():
             info = line.split()[0:6]
 
     # publish information to the cloud
-    for i in range(1, 4):
+    for i in range(1, 5):
         client.publish(
-            topic='RM/Greengrass/data/Disk_{}'.format(desc[i]),
+            topic='RM/Greengrass/data/Disk_{0}'.format(desc[i]),
             payload=json.dumps({'Disk_{}'.format(desc[i]): info[i]})
         )
-    return { desc[1]: info[1], desc[2]: info[2], desc[3]: info[3], desc[4]: info[4]}
+    return dict(zip(desc, info))
 
 def get_memory_info():
     memory_info = dict((i.split()[0].rstrip(':'), int(i.split()[1])) for i in open('/proc/meminfo').readlines())
@@ -79,14 +80,14 @@ def get_lambdas():
 def run():
     date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    ip = get_ip()
+    #ip = get_ip()
     memory_info = get_memory_info()
-    cpu_temp = get_cpu_temp()
-    disk_info = get_disk_info()
-    lambdas = get_lambdas()
+    #cpu_temp = get_cpu_temp()
+    #disk_info = get_disk_info()
+    #lambdas = get_lambdas()
 
-    output.write(ip)
-    output.write(memory_info)
+    #output.write(ip)
+    #output.write(memory_info)
     #print cpu_temp
     #print disk_info
     #print lambdas
@@ -105,21 +106,13 @@ def run():
             payload=json.dumps({
                 'deviceId': 'Greengrass', #ip,
                 'timestamp': date_time,
-                'platform': my_platform
+                'platform': my_platform,
+                'mem_info': memory_info,
                 #'cpu_temp': cpu_temp,
-                #'disk_info': disk_info,
+                #'disk_info': disk_info#,
                 #'lambdas_deployed': lambdas
             })
         )
 
-# This is a dummy handler and will not be invoked
-# Instead the code above will be executed in an infinite loop for our example
 def lambda_handler(event, context):
     run()
-
-
-
-#cd /greengrass/ggc/core/
-#sudo ./greengrassd start
-
-#ps aux | grep -E 'greengrass.*daemon'
