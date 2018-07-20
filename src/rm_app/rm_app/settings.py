@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -25,7 +25,7 @@ SECRET_KEY = '92c#0gl61d6kr92muiamdf8-fh0^b6hi8^$#w+7cpnsjnd-j#6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://resource-monitor.dy3hdmdxsh.us-west-2.elasticbeanstalk.com/']
+ALLOWED_HOSTS = ['http://resource-monitor.dy3hdmdxsh.us-west-2.elasticbeanstalk.com/', '127.0.0.1']
 
 # Application definition
 
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dashboard'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'rm_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
