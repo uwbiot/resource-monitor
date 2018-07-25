@@ -26,7 +26,8 @@ SECRET_KEY = '92c#0gl61d6kr92muiamdf8-fh0^b6hi8^$#w+7cpnsjnd-j#6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://resource-monitor.dy3hdmdxsh.us-west-2.elasticbeanstalk.com/', '127.0.0.1']
+ALLOWED_HOSTS = ['resource-monitor.dy3hdmdxsh.us-west-2.elasticbeanstalk.com', 
+'127.0.0.1']
 
 # Application definition
 
