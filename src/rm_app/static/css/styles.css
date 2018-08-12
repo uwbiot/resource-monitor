@@ -5,7 +5,14 @@ body {
 
 .navbar {
     background-color: #47357D;
+}
+h1 {
+    font-size: 2rem;
+    display: inline;
     color: #ECE9E3;
-    text-transform: capitalize;
     text-align: center;
+    margin: 15px;
+    vertical-align: middle;
+    font-family: monospace;
+    font-weight: bold;
 }
