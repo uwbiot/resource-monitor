@@ -1,3 +1,11 @@
 body {
-    background-color: blueviolet;
+    background-color: #ECE9E3;
+    /*#E3BD81;*/
+}
+
+.navbar {
+    background-color: #47357D;
+    color: #ECE9E3;
+    text-transform: capitalize;
+    text-align: center;
 }
